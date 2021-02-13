@@ -1,7 +1,11 @@
 // Script.js
 
 window.addEventListener('DOMContentLoaded', () => {
-  fetchJSON('https://fakestoreapi.com/products').then(data => {console.log(data);});
+  if (localStorage.getItem('items') === null) {
+    fetchJSON('https://fakestoreapi.com/products').then(data => {
+      localStorage.setItem('items', JSON.stringify(data));
+    });
+  }
 });
 
 async function fetchJSON(url) {
