@@ -1,5 +1,14 @@
 // product-item.js
 
+let cartItems = localStorage.getItem('cart');
+if (cartItems === null) {
+  cartItems = [];
+} else {
+  cartItems = JSON.parse(cartItems);
+}
+
+document.getElementById('cart-count').textContent = cartItems.length;
+
 class ProductItem extends HTMLElement {
   constructor() {
     super();
@@ -22,7 +31,12 @@ class ProductItem extends HTMLElement {
     price.textContent = this.getAttribute('price');
 
     const btn = document.createElement('button');
-    btn.textContent = 'Add to Cart';
+    if (cartItems.includes(this.getAttribute('id'))) {
+      btn.textContent = 'Remove from Cart';
+    } else {
+      btn.textContent = 'Add to Cart';
+    }
+
     btn.addEventListener('click', () => {
       alert('Added to Cart!');
     });
@@ -113,10 +127,13 @@ class ProductItem extends HTMLElement {
   updateCart(id, add) {
     const cartCount = document.getElementById('cart-count');
     if (add) {
-      cartCount.textContent = Number(cartCount.textContent) + 1; 
+      cartCount.textContent = Number(cartCount.textContent) + 1;
+      cartItems.push(id); 
     } else {
-      cartCount.textContent = Number(cartCount.textContent) - 1; 
+      cartCount.textContent = Number(cartCount.textContent) - 1;
+      cartItems.splice(cartItems.indexOf(id), 1); 
     }
+    localStorage.setItem('cart', JSON.stringify(cartItems));
   }
 }
 
