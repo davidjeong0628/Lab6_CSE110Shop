@@ -22,6 +22,6 @@ async function createList() {
   const productList = document.getElementById('product-list');
 
   for (let item of items) {
-    productList.innerHTML += `<product-item title="${item.title}" price="$${String(item.price)}" img-src="${item.image}"></product-item>`;
+    productList.innerHTML += `<product-item id="${item.id}" title="${item.title}" price="$${String(item.price)}" img-src="${item.image}"></product-item>`;
   }
 }

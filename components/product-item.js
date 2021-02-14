@@ -26,6 +26,15 @@ class ProductItem extends HTMLElement {
     btn.addEventListener('click', () => {
       alert('Added to Cart!');
     });
+    btn.addEventListener('click', () => {
+      if ( (btn.textContent === 'Add to Cart') ) {
+        btn.textContent = 'Remove from Cart';
+        this.updateCart(this.getAttribute('id'), true);
+      } else {
+        btn.textContent = 'Add to Cart';
+        this.updateCart(this.getAttribute('id'), false);
+      }
+    });
 
     const style = document.createElement('style');
     style.textContent = `
@@ -99,6 +108,15 @@ class ProductItem extends HTMLElement {
     wrapper.appendChild(title);
     wrapper.appendChild(price);
     wrapper.appendChild(btn);
+  }
+
+  updateCart(id, add) {
+    const cartCount = document.getElementById('cart-count');
+    if (add) {
+      cartCount.textContent = Number(cartCount.textContent) + 1; 
+    } else {
+      cartCount.textContent = Number(cartCount.textContent) - 1; 
+    }
   }
 }
 
